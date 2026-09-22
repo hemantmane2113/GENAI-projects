@@ -6,6 +6,53 @@ This project provides a **lightweight FLAN-T5-based assistant** for:
 - Answering questions from a local context (`context.txt`)
 
 ---
+The project architecture is as follows:
+
+                    ┌──────────────────────┐
+                    │      CLI User        │
+                    └──────────┬───────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 │                           │
+                 ▼                           ▼
+          Summarization                  Q&A
+                 │                           │
+                 ▼                           ▼
+       Build summarization             Load context.txt
+             prompt                         │
+                 │                          │
+                 │                    User question
+                 │                          │
+                 └─────────────┬────────────┘
+                               ▼
+                    Marvellous_run_flan()
+                               │
+                               ▼
+                         Tokenizer
+                               │
+                               ▼
+                       Input token IDs
+                               │
+                               ▼
+                    ┌───────────────────┐
+                    │    FLAN-T5-small  │
+                    │                   │
+                    │ Encoder           │
+                    │       ↓           │
+                    │ Decoder           │
+                    └─────────┬─────────┘
+                              │
+                              ▼
+                       Generated IDs
+                              │
+                              ▼
+                         Tokenizer
+                          decode()
+                              │
+                              ▼
+                         Text output
+
+---
 
 ## Setup
 
@@ -13,4 +60,3 @@ This project provides a **lightweight FLAN-T5-based assistant** for:
 ```bash
 git clone <repo_url>
 cd Marvellous_FLAN_T5
-
